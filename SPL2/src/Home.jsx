@@ -49,7 +49,7 @@ function Home() {
               {
                 key: '3',
                 icon: <UploadOutlined />,
-                label: 'Upload Cv',
+                label: <Link to="/Upload">Upload Resume</Link>,
               },
             ]}
           />
@@ -84,7 +84,7 @@ function Home() {
               backgroundPosition: 'center',
             }}
           >
-            <div style={{ textAlign: 'center' }}>
+            <div style={{ textAlign: 'center', color: 'revert-layer'}}>
               <h1>Welcome to Inten & Placement Office Management</h1>
             </div>
           </Content>
