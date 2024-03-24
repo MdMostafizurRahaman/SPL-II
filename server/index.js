@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bcrypt = require("bcrypt"); // Add bcrypt for password hashing
 const StudentModel = require('./models/Student');
-const nodemailer = require('nodemailer'); 
+//const nodemailer = require('nodemailer'); 
 
 const app = express();
 app.use(express.json());
