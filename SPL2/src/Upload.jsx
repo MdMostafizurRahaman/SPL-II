@@ -1,7 +1,8 @@
 import React from 'react';
 import { InboxOutlined } from '@ant-design/icons';
 import { message, Upload } from 'antd';
-import uploadImage from './intern7.webp'; // Importing the background image
+import { Link } from 'react-router-dom'; // Import Link from React Router
+import uploadImage from './Upload_2.png'; // Importing the background image
 
 const { Dragger } = Upload;
 
@@ -25,7 +26,7 @@ const uploadProps = {
   },
 };
 
-const App = () => (
+const UploadComponent = () => (
   <div style={{ backgroundImage: `url(${uploadImage})`, backgroundSize: 'cover', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
     <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '20px', borderRadius: '8px', maxWidth: '400px' }}>
       <Dragger {...uploadProps}>
@@ -38,8 +39,15 @@ const App = () => (
           banned files.
         </p>
       </Dragger>
+      {/* Navigation links */}
+      <nav>
+        <ul>
+          <li><Link to="/home">Home</Link></li>
+          <li><Link to="/login">Login</Link></li>
+        </ul>
+      </nav>
     </div>
   </div>
 );
 
-export default App;
+export default UploadComponent;

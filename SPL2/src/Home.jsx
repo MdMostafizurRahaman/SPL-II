@@ -18,7 +18,7 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu, Button, theme } from 'antd';
 import { Link } from 'react-router-dom'; // Import Link
-import internImage from './intern3.jpg'; // Import the image
+import internImage from './Home.png'; // Import the image
 const { Header, Sider, Content } = Layout;
 
 function Home() {
@@ -84,9 +84,9 @@ function Home() {
               backgroundPosition: 'center',
             }}
           >
-            <div style={{ textAlign: 'center', color: 'revert-layer'}}>
+            {/* <div style={{ textAlign: 'center', color: 'revert-layer'}}>
               <h1>Welcome to Inten & Placement Office Management</h1>
-            </div>
+            </div> */}
           </Content>
         </Layout>
       </Layout>
