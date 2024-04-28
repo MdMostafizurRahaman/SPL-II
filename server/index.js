@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const bcrypt = require("bcrypt"); // Add bcrypt for password hashing
+const bcrypt = require("bcryptjs"); // Add bcrypt for password hashing
 const StudentModel = require('./models/Student');
 //const nodemailer = require('nodemailer'); 
 
@@ -39,7 +39,6 @@ function generateOTP() {
 // Helper function to send OTP via email (you need to implement this logic)
 function sendOTP(email, OTP) {
     // Implement logic to send OTP via email using nodemailer
-    // Example:
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
