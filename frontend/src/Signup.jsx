@@ -7,6 +7,7 @@ function Signup() {
     const [name, setName] = useState()
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
+    const [registrationType, setRegistrationType] = useState("student"); 
     const navigate = useNavigate()
 
     const handlesSubmit = (e) => 
@@ -14,7 +15,22 @@ function Signup() {
         e.preventDefault()
         axios.post('http://localhost:3000/register',{ name,email,password })
         .then(result => {console.log(result.data)
-            navigate('/login')
+           // navigate('/login')
+
+            // Redirect to dashboard based on registration type
+            switch (registrationType) {
+                case "student":
+                    navigate('/StudentDashboard');
+                    break;
+                case "ipoc":
+                    navigate('/IpocDashboard');
+                    break;
+                case "company":
+                    navigate('/CompanyDashboard');
+                    break;
+                default:
+                    navigate('/login');
+            }
         })
         .catch(err => console.log(err))
     }

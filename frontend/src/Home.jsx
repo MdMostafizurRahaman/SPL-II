@@ -8,6 +8,7 @@
 // }
 // export default Home;
 
+
 import React, { useState } from 'react';
 import {
   MenuFoldOutlined,
@@ -15,6 +16,7 @@ import {
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
+  DashboardOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, Button, theme } from 'antd';
 import { Link } from 'react-router-dom'; // Import Link
@@ -43,8 +45,20 @@ function Home() {
               },
               {
                 key: '2',
-                icon: <VideoCameraOutlined />,
-                label: 'nav 2',
+                icon: <DashboardOutlined />,
+                label: <Link to="/StudentDashboard">Student Dashboard</Link>,
+              },
+
+              {
+                key: '2',
+                icon: <DashboardOutlined />,
+                label: <Link to="/IpocDashboard">Ipoc Dashboard</Link>,
+              },
+
+              {
+                key: '2',
+                icon: <DashboardOutlined />,
+                label: <Link to="/CompanyDashboard">Company Dashboard</Link>,
               },
               {
                 key: '3',

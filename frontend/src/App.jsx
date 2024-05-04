@@ -6,6 +6,10 @@ import Login from './Login'
 import Home from './Home'
 import Upload from './Upload' 
 import ForgotPassword from './ForgotPassword'
+import StudentDashboard from './StudentDashboard'
+import IpocDashboard from './IpocDashboard'
+import CompanyDashboard from './CompanyDashboard'
+
 
 function App() {
  
@@ -25,6 +29,9 @@ function App() {
         <Route path='/upload' element = {<Upload />}></Route>
 
         <Route path='forgot-password' element = {<ForgotPassword />}></Route>
+        <Route path='studentdashboard' element = {<StudentDashboard />}></Route>
+        <Route path='ipocdashboard' element = {<IpocDashboard />}></Route>
+        <Route path='companydashboard' element = {<CompanyDashboard />}></Route>
       </Routes>
     </BrowserRouter>
      
