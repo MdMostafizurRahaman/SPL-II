@@ -2,10 +2,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bcrypt = require("bcryptjs"); // Add bcrypt for password hashing
+<<<<<<< HEAD
 const multer = require("multer"); 
 const StudentModel = require('./models/Student');
 const nodemailer = require('nodemailer'); 
 const path = require('path');
+=======
+//const StudentModel = require('./models/Student');
+//const nodemailer = require('nodemailer'); 
+>>>>>>> origin/master
 
 const app = express();
 app.use(express.json());
