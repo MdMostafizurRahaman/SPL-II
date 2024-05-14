@@ -1,0 +1,7 @@
+Git check
+
+git status
+ git add .
+ git commit -m"Committeed"
+ git pull origin  master
+ git push -u origin master
