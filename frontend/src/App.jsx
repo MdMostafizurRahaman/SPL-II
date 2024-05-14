@@ -9,7 +9,9 @@ import ForgotPassword from './ForgotPassword'
 import StudentDashboard from './StudentDashboard'
 import IpocDashboard from './IpocDashboard'
 import CompanyDashboard from './CompanyDashboard'
-
+import Stu_dashboard from './Stu_dashboard'
+import RegistrationTypeSelection from './RegistrationTypeSelection'
+import UploadProfilePicture from './UploadProfilePicture'
 
 function App() {
  
@@ -18,21 +20,21 @@ function App() {
    
     <BrowserRouter>
       <Routes>
-        <Route path='/register' element={<Signup />}></Route>
-        <Route path='/login' element={<Login />}></Route>
-         <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup />} />
-        {/* add a default route for the root url */}
-        <Route path='/' element={<Navigate to="/login" />}></Route>
-        <Route path="/home" element= {<Home />}></Route>
-       {/* // <Route path="/" element={<Home />} /> */}
-        <Route path='/upload' element = {<Upload />}></Route>
-
-        <Route path='forgot-password' element = {<ForgotPassword />}></Route>
-        <Route path='studentdashboard' element = {<StudentDashboard />}></Route>
-        <Route path='ipocdashboard' element = {<IpocDashboard />}></Route>
-        <Route path='companydashboard' element = {<CompanyDashboard />}></Route>
-      </Routes>
+                <Route path="/register" element={<Signup />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/signup/:type" element={<Signup />} />
+                <Route path="/registration-type" element={<RegistrationTypeSelection />} />
+        
+                <Route path="/upload" element={<Upload />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/studentdashboard" element={<StudentDashboard />} />
+                <Route path="/ipocdashboard" element={<IpocDashboard />} />
+                <Route path="/companydashboard" element={<CompanyDashboard />} />
+                <Route path="/stu_dashboard" element={<Stu_dashboard />} />
+          
+                <Route path="/upload-profile-picture" element={<UploadProfilePicture />} />
+            </Routes>
     </BrowserRouter>
      
   )

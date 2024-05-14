@@ -15,25 +15,54 @@ function Signup() {
         e.preventDefault()
         axios.post('http://localhost:3000/register',{ name,email,password })
         .then(result => {console.log(result.data)
-           // navigate('/login')
+            navigate('/login')
 
-            // Redirect to dashboard based on registration type
-            switch (registrationType) {
-                case "student":
-                    navigate('/StudentDashboard');
-                    break;
-                case "ipoc":
-                    navigate('/IpocDashboard');
-                    break;
-                case "company":
-                    navigate('/CompanyDashboard');
-                    break;
-                default:
-                    navigate('/login');
-            }
+            // // Redirect to dashboard based on registration type
+            // switch (registrationType) {
+            //     case "student":
+            //         navigate('/StudentDashboard');
+            //         break;
+            //     case "ipoc":
+            //         navigate('/IpocDashboard');
+            //         break;
+            //     case "company":
+            //         navigate('/CompanyDashboard');
+            //         break;
+            //     default:
+            //         navigate('/login');
+            // }
         })
         .catch(err => console.log(err))
     }
+
+    // Render different UI elements based on the type parameter
+    // const renderSignUpForm = () => {
+    //     switch (type) {
+    //         case "student":
+    //             return (
+    //                 <div>
+    //                     <h2>Student Signup</h2>
+    //                     {/* Student-specific form fields */}
+    //                 </div>
+    //             );
+    //         case "ipoc":
+    //             return (
+    //                 <div>
+    //                     <h2>IPOC Signup</h2>
+    //                     {/* IPOC-specific form fields */}
+    //                 </div>
+    //             );
+    //         case "company":
+    //             return (
+    //                 <div>
+    //                     <h2>Company Signup</h2>
+    //                     {/* Company-specific form fields */}
+    //                 </div>
+    //             );
+    //         default:
+    //             return null;
+    //     }
+    // }
     return (
         <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
             <div className="bg-white p-3 rounded w-25">
