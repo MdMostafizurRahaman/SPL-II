@@ -7,7 +7,8 @@ import {
   TeamOutlined,
   UserOutlined,
   DashboardOutlined,
-  UploadOutlined
+  UploadOutlined,
+  UnorderedListOutlined
 } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import dashboardImage from './dashboardSt2.png';
@@ -21,26 +22,40 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem('Option 1', '1', <PieChartOutlined />),
-  getItem('Option 2', '2', <DesktopOutlined />),
-  getItem('User', 'sub1', <UserOutlined />, [
-    getItem('Tom', '3'),
-    getItem('Bill', '4'),
-    getItem('Alex', '5'),
-  ]),
-  getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
+  // getItem('Option 1', '1', <PieChartOutlined />),
+  // getItem('Option 2', '2', <DesktopOutlined />),
+  // getItem('User', 'sub1', <UserOutlined />, [
+  //   getItem('Tom', '3'),
+  //   getItem('Bill', '4'),
+  //   getItem('Alex', '5'),
+  // ]),
+  // getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
   {
-    key: '9',
+    key: '1',
     icon: <FileOutlined />,
     label: 'Upload CV', // Change the label to 'Upload'
     linkTo: '/upload', 
   },
   // Inside the items array
 {
-  key: '10',
+  key: '2',
   icon: <UploadOutlined />,
   label: 'Upload Profile Picture',
   linkTo: '/upload-profile-picture',
+},
+
+{
+  key: '3',
+  icon: <UploadOutlined />,
+  label: 'Upload CGPA & Skills',
+  linkTo: '/uploadCgpaAndSkills',
+},
+
+{
+  key: '4',
+  icon: < UnorderedListOutlined />,
+  label: 'Company List',
+  linkTo: '/companyList',
 },
 
 ];

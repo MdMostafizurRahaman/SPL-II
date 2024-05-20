@@ -15,6 +15,9 @@ import CompanyDashboard from './CompanyDashboard'
 import Stu_dashboard from './Stu_dashboard'
 import RegistrationTypeSelection from './RegistrationTypeSelection'
 import UploadProfilePicture from './UploadProfilePicture'
+import UploadCGPAAndSkillset from './Upload_CGPA_&_Skills'
+import CompanyList from './CompanyList'
+import CompanyDetail from './CompanyDetails'
 
 function App() {
  
@@ -37,6 +40,9 @@ function App() {
                 <Route path="/ipocdashboard" element={<IpocDashboard />} />
                 <Route path="/companydashboard" element={<CompanyDashboard />} />
                 <Route path="/stu_dashboard" element={<Stu_dashboard />} />
+                <Route path="/uploadCgpaAndSkills" element={<UploadCGPAAndSkillset />} />
+                <Route path="/companyList" element={<CompanyList />} />
+                <Route path="/company/:companyId" element={<CompanyDetail />} />
           
                 <Route path="/upload-profile-picture" element={<UploadProfilePicture />} />
             </Routes>
