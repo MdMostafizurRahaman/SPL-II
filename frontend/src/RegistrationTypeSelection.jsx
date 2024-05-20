@@ -8,17 +8,17 @@ function RegistrationTypeSelection() {
             <div className="bg-white p-3 rounded w-25">
                 <h2>Choose Registration Type</h2>
                 <div className="mb-3">
-                    <Link to="/register" className="btn btn-primary w-100 rounded-0">
+                    <Link to="/student_register" className="btn btn-primary w-100 rounded-0">
                         Student
                     </Link>
                 </div>
                 <div className="mb-3">
-                    <Link to="/register" className="btn btn-primary w-100 rounded-0">
+                    <Link to="/ipoc_register" className="btn btn-primary w-100 rounded-0">
                         IPOC
                     </Link>
                 </div>
                 <div className="mb-3">
-                    <Link to="/register" className="btn btn-primary w-100 rounded-0">
+                    <Link to="/company_register" className="btn btn-primary w-100 rounded-0">
                         Company
                     </Link>
                 </div>

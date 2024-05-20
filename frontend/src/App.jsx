@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Signup from './Signup'
+import Student_Signup from './Student_Signup'
+import Ipoc_Signup from './Ipoc_Signup'
+//import Company_Signup from './Company_Signup'
+import Company_Signup from './Company_Signup'
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 import Login from './Login'
 import Home from './Home'
@@ -20,10 +23,12 @@ function App() {
    
     <BrowserRouter>
       <Routes>
-                <Route path="/register" element={<Signup />} />
+                <Route path="/student_register" element={<Student_Signup />} />
+                <Route path="/ipoc_register" element={<Ipoc_Signup />} />
+                <Route path="/company_register" element={<Company_Signup />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/" element={<Home />} />
-                <Route path="/signup/:type" element={<Signup />} />
+                {/* <Route path="/signup" element={<RegistrationTypeSelection />} /> */}
                 <Route path="/registration-type" element={<RegistrationTypeSelection />} />
         
                 <Route path="/upload" element={<Upload />} />

@@ -7,18 +7,49 @@ import { useNavigate } from "react-router-dom";
 function Login() {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const [usertype, setUsertype] = useState('student');
+
     const navigate = useNavigate();
+    console.log(usertype)
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3000/login', { email, password })
-            .then(result => {
-                console.log(result.data);
-                if (result.data === "Success") {
-                    navigate('/');
-                }
-            })
-            .catch(err => console.log(err));
+        if (usertype === 'ipoc') {
+            axios.post('http://localhost:3000/ipoc_login', { email, password })
+                .then(result => {
+                    console.log(result.data);
+                    if (result.data === "Success") {
+                        navigate('/IpocDashboard');
+                    }
+                })
+                .catch(err => console.log(err));
+
+        }
+
+        else if (usertype === 'company') {
+            axios.post('http://localhost:3000/company_login', { email, password })
+                .then(result => {
+                    console.log(result.data);
+                    if (result.data === "Success") {
+                        navigate('/CompanyDashboard');
+                    }
+                })
+                .catch(err => console.log(err));
+
+        }
+        else {
+            axios.post('http://localhost:3000/student_login', { email, password })
+                .then(result => {
+                    console.log(result.data);
+                    if (result.data === "Success") {
+                        navigate('/Stu_dashboard');
+                    }
+                })
+                .catch(err => console.log(err));
+
+        }
+
+
     };
 
     return (
@@ -26,6 +57,14 @@ function Login() {
             <div className="bg-white p-3 rounded w-25">
                 <h2>Login</h2>
                 <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label htmlFor="usertype"><strong>User Type</strong></label>
+                        <select name="cars" id="usertype" className="form-control rounded-0" defaultValue={"student"} onChange={(e) => setUsertype(e.target.value)}>
+                            <option value="student">Student</option>
+                            <option value="ipoc">Ipoc</option>
+                            <option value="company">Company</option>
+                        </select>
+                    </div>
                     <div className="mb-3">
                         <label htmlFor="email"><strong>Email</strong></label>
                         <input

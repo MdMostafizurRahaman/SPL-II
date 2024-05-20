@@ -38,7 +38,10 @@ function Home() {
           <Menu.Item key="1" icon={<UserOutlined />}>
             <Link to="/registration-type" className="btn btn-primary">Signup</Link>
           </Menu.Item>
-          <Menu.Item key="2" icon={<DashboardOutlined />}>
+          <Menu.Item key="2" icon={<UserOutlined />}>
+            <Link to="/login" className="btn btn-primary">Login</Link>
+          </Menu.Item>
+          {/* <Menu.Item key="2" icon={<DashboardOutlined />}>
             <Link to="/StudentDashboard">Student Dashboard</Link>
           </Menu.Item>
           <Menu.Item key="3" icon={<DashboardOutlined />}>
@@ -52,7 +55,7 @@ function Home() {
           </Menu.Item>
           <Menu.Item key="6" icon={<DashboardOutlined />}>
             <Link to="/Stu_dashboard">StudentDashboard</Link>
-          </Menu.Item>
+          </Menu.Item> */}
         </Menu>
       </Sider>
       <Layout>

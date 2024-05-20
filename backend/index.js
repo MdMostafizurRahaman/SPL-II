@@ -5,8 +5,11 @@ const bcrypt = require("bcryptjs"); // Add bcrypt for password hashing
 
 const multer = require("multer"); 
 const StudentModel = require('./models/Student');
+const IpocModel = require('./models/Ipoc');
+const CompanyModel = require('./models/Company');
 const nodemailer = require('nodemailer'); 
 const path = require('path');
+const fs = require('fs');
 
 
 const app = express();
@@ -109,7 +112,7 @@ function sendOTP(email, OTP) {
     });
 }
 
-app.post("/login", async (req, res) => {
+app.post("/student_login", async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = await StudentModel.findOne({ email });
@@ -128,7 +131,45 @@ app.post("/login", async (req, res) => {
     }
 });
 
-app.post('/register', async (req, res) => {
+app.post("/ipoc_login", async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const user = await IpocModel.findOne({ email });
+        if (user) {
+            const passwordMatch = await bcrypt.compare(password, user.password);
+            if (passwordMatch) {
+                res.status(200).json("Success");
+            } else {
+                res.status(401).json("Invalid email or password");
+            }
+        } else {
+            res.status(404).json("Invalid user");
+        }
+    } catch (err) {
+        res.status(500).json(err.message);
+    }
+});
+
+app.post("/company_login", async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const user = await CompanyModel.findOne({ email });
+        if (user) {
+            const passwordMatch = await bcrypt.compare(password, user.password);
+            if (passwordMatch) {
+                res.status(200).json("Success");
+            } else {
+                res.status(401).json("Invalid email or password");
+            }
+        } else {
+            res.status(404).json("Invalid user");
+        }
+    } catch (err) {
+        res.status(500).json(err.message);
+    }
+});
+
+app.post('/student_register', async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10); // Hash password
         const student = await StudentModel.create({ ...req.body, password: hashedPassword });
@@ -137,6 +178,47 @@ app.post('/register', async (req, res) => {
         res.status(400).json(err.message);
     }
 });
+
+app.post('/ipoc_register', async (req, res) => {
+    try {
+        console.log(req.body)
+        const hashedPassword = await bcrypt.hash(req.body.password, 10); // Hash password
+        const ipoc = await IpocModel.create({ ...req.body, password: hashedPassword });
+        res.status(201).json(ipoc);
+    } catch (err) {
+        res.status(400).json(err.message);
+    }
+});
+
+app.post('/company_register', async (req, res) => {
+    try {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10); // Hash password
+        const company = await CompanyModel.create({ ...req.body, password: hashedPassword });
+        res.status(201).json(company);
+    } catch (err) {
+        res.status(400).json(err.message);
+    }
+});
+
+
+
+// CV upload
+const storage2 = multer.diskStorage({
+    destination: 'resumeFolder/',
+    filename: (req, file, cb) => {
+        const uniqueSuffix = req.body.email;
+        const extension = path.extname(file.originalname);
+        cb(null, uniqueSuffix + extension);
+    },
+});
+
+const upload2 = multer({ 'storage': storage2 });
+
+app.post('/resume_upload', upload2.single('resume'), (req, res) => {
+    const imageFile = req.file;
+    console.log(imageFile)
+    res.status(201).json({message: "akbfjfkj"});
+})
 
 app.listen(3000, () => {
     console.log("Server is running");
