@@ -7,10 +7,11 @@ import {
   TeamOutlined,
   UserOutlined,
   DashboardOutlined,
-  UploadOutlined
+  UploadOutlined,
+  UnorderedListOutlined
 } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import dashboardImage from './dashboardST.jpg';
+import dashboardImage from './dashboardIP.jpg';
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -21,28 +22,41 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem('Option 1', '1', <PieChartOutlined />),
-  getItem('Option 2', '2', <DesktopOutlined />),
-  getItem('User', 'sub1', <UserOutlined />, [
-    getItem('Tom', '3'),
-    getItem('Bill', '4'),
-    getItem('Alex', '5'),
-  ]),
-  getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-  {
-    key: '9',
-    icon: <FileOutlined />,
-    label: 'Upload CV', // Change the label to 'Upload'
-    linkTo: '/upload', 
-  },
-  // Inside the items array
+//   getItem('Option 1', '1', <PieChartOutlined />),
+//   getItem('Option 2', '2', <DesktopOutlined />),
+//   getItem('User', 'sub1', <UserOutlined />, [
+//     getItem('Tom', '3'),
+//     getItem('Bill', '4'),
+//     getItem('Alex', '5'),
+//   ]),
+//   getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
+//   {
+//     key: '9',
+//     icon: <FileOutlined />,
+//     label: 'Upload CV', // Change the label to 'Upload'
+//     linkTo: '/upload', 
+//   },
+//   // Inside the items array
+// {
+//   key: '10',
+//   icon: <UploadOutlined />,
+//   label: 'Upload Profile Picture',
+//   linkTo: '/upload-profile-picture',
+// },
+
 {
-  key: '10',
-  icon: <UploadOutlined />,
-  label: 'Upload Profile Picture',
-  linkTo: '/upload-profile-picture',
+  key: '1',
+  icon: < UnorderedListOutlined />,
+  label: 'Add Company List',
+  linkTo: '/addcompanyList',
 },
 
+{
+  key: '2',
+  icon: < UnorderedListOutlined />,
+  label: 'Add Company Detail',
+  linkTo: '/addcompanyDetail',
+},
 ];
 const App = () => {
   const [collapsed, setCollapsed] = useState(false);

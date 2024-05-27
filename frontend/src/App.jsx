@@ -18,12 +18,15 @@ import UploadProfilePicture from './UploadProfilePicture'
 import UploadCGPAAndSkillset from './Upload_CGPA_&_Skills'
 import CompanyList from './CompanyList'
 import CompanyDetail from './CompanyDetails'
-
+import AddCompanyDetail from './AddCompanyDetail'
+import AddCompanyList from './AddCompanyList'
+import { CompanyProvider  } from './CompanyContext'
+import About from './About'
 function App() {
  
 
   return (
-   
+    <CompanyProvider>
     <BrowserRouter>
       <Routes>
                 <Route path="/student_register" element={<Student_Signup />} />
@@ -43,10 +46,14 @@ function App() {
                 <Route path="/uploadCgpaAndSkills" element={<UploadCGPAAndSkillset />} />
                 <Route path="/companyList" element={<CompanyList />} />
                 <Route path="/company/:companyId" element={<CompanyDetail />} />
+                <Route path="/addcompanyDetail" element={<AddCompanyDetail />} />
+                <Route path="/addcompanyList" element={<AddCompanyList />} />
+                <Route path="/about" element={<About />} />
           
                 <Route path="/upload-profile-picture" element={<UploadProfilePicture />} />
             </Routes>
     </BrowserRouter>
+    </CompanyProvider>
      
   )
 }

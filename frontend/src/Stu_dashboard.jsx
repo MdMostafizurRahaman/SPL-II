@@ -58,6 +58,8 @@ const items = [
   linkTo: '/companyList',
 },
 
+
+
 ];
 const App = () => {
   const [collapsed, setCollapsed] = useState(false);
