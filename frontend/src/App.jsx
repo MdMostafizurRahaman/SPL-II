@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Student_Signup from './Student_Signup'
 import Ipoc_Signup from './Ipoc_Signup'
 //import Company_Signup from './Company_Signup'
-import Company_Signup from './Company_Signup'
+import Company_Signup from './components/authentication/Company_Signup'
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 import Login from './Login'
 import Home from './Home'
@@ -18,10 +18,10 @@ import UploadProfilePicture from './UploadProfilePicture'
 import UploadCGPAAndSkillset from './Upload_CGPA_&_Skills'
 import CompanyList from './CompanyList'
 import CompanyDetail from './CompanyDetails'
-import AddCompanyDetail from './AddCompanyDetail'
-import AddCompanyList from './AddCompanyList'
+import AddCompanyDetail from './components/company/AddCompanyDetail'
+import AddCompanyList from './components/company/AddCompanyList'
 import { CompanyProvider  } from './CompanyContext'
-import About from './About'
+
 function App() {
  
 
@@ -48,7 +48,6 @@ function App() {
                 <Route path="/company/:companyId" element={<CompanyDetail />} />
                 <Route path="/addcompanyDetail" element={<AddCompanyDetail />} />
                 <Route path="/addcompanyList" element={<AddCompanyList />} />
-                <Route path="/about" element={<About />} />
           
                 <Route path="/upload-profile-picture" element={<UploadProfilePicture />} />
             </Routes>

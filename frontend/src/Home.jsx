@@ -41,10 +41,6 @@ function Home() {
           <Menu.Item key="2" icon={<UserOutlined />}>
             <Link to="/login" className="btn btn-primary">Login</Link>
           </Menu.Item>
-
-          <Menu.Item key="3" icon={<UserOutlined />}>
-            <Link to="/about" className="btn btn-primary">About</Link>
-          </Menu.Item>
           {/* <Menu.Item key="2" icon={<DashboardOutlined />}>
             <Link to="/StudentDashboard">Student Dashboard</Link>
           </Menu.Item>
