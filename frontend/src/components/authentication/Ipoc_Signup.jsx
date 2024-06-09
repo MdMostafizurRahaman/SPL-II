@@ -1,21 +1,26 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import axios from 'axios';
+import React, { useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import { ipocSignUp } from "../../api/authentication.api";
 
-export default function Ipoc_signup() {
+function IpocSignup() {
+    const { type } = useParams();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [registrationType, setRegistrationType] = useState("student"); 
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
     const validateForm = () => {
         const newErrors = {};
+        const bsseEmailPattern = /^bsse\d+@iit.du.ac.bd$/;
 
         if (!name) newErrors.name = "Name is required.";
-        if (!email) newErrors.email = "Email is required.";
+        if (!email) {
+            newErrors.email = "Email is required.";
+        } else if (!bsseEmailPattern.test(email)) {
+            newErrors.email = "Email must be a valid BSSE email (e.g., bsse1316@iit.du.ac.bd).";
+        }
         if (!password) {
             newErrors.password = "Password is required.";
         } else if (password.length < 8) {
@@ -27,24 +32,33 @@ export default function Ipoc_signup() {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handlesSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
+        
         if (validateForm()) {
-            axios.post('http://localhost:3000/ipoc_register', { name, email, password })
-                .then(result => {
-                    console.log(result.data);
-                    navigate('/login');
-                })
-                .catch(err => console.log(err));
+            const data = {
+                name,
+                email,
+                password,
+                userType: "admin"  // Include the registration type in the data sent to the API
+            };
+            
+            try {
+                const response = await ipocSignUp(data);
+                console.log(response);
+                navigate('/login'); // Redirect to login page after successful registration
+            } catch (err) {
+                console.error(err);
+                setErrors({ api: "Failed to register. Please try again." });
+            }
         }
     };
 
     return (
         <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
             <div className="bg-white p-3 rounded w-25">
-                <h2>Ipoc Register</h2>
-                <form onSubmit={handlesSubmit}>
+                <h2> Register</h2>
+                <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="name">
                             <strong>Name</strong>
@@ -91,6 +105,7 @@ export default function Ipoc_signup() {
                         Register
                     </button>
                 </form>
+                {errors.api && <div className="text-danger mt-3">{errors.api}</div>}
                 <p>Already have an account?</p>
                 <Link to="/login" className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none">
                     Login
@@ -102,3 +117,5 @@ export default function Ipoc_signup() {
         </div>
     );
 }
+
+export default IpocSignup;

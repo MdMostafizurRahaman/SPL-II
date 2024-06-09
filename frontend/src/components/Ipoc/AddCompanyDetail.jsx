@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Input, Button, Select, Layout, Typography, Table } from 'antd';
-import { useCompanyContext } from '../../CompanyContext'; // Import the context
+import { useCompanyContext } from './CompanyContext'; // Import the context
 import { useNavigate } from 'react-router-dom';
 
 const { Content } = Layout;

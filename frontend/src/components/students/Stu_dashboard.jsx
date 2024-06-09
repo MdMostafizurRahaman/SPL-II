@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  DesktopOutlined,
   FileOutlined,
   PieChartOutlined,
   TeamOutlined,
@@ -11,7 +10,7 @@ import {
   UnorderedListOutlined
 } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import dashboardImage from './dashboardSt2.png';
+import dashboardImage from '../../assets/dashboardSt2.png';
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -22,37 +21,23 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  // getItem('Option 1', '1', <PieChartOutlined />),
-  // getItem('Option 2', '2', <DesktopOutlined />),
-  // getItem('User', 'sub1', <UserOutlined />, [
-  //   getItem('Tom', '3'),
-  //   getItem('Bill', '4'),
-  //   getItem('Alex', '5'),
-  // ]),
-  // getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
+ 
   {
     key: '1',
     icon: <FileOutlined />,
     label: 'Upload CV', // Change the label to 'Upload'
     linkTo: '/upload', 
   },
-  // Inside the items array
-{
-  key: '2',
-  icon: <UploadOutlined />,
-  label: 'Upload Profile Picture',
-  linkTo: '/upload-profile-picture',
-},
 
 {
-  key: '3',
+  key: '2',
   icon: <UploadOutlined />,
   label: 'Upload CGPA & Skills',
   linkTo: '/uploadCgpaAndSkills',
 },
 
 {
-  key: '4',
+  key: '3',
   icon: < UnorderedListOutlined />,
   label: 'Company List',
   linkTo: '/companyList',
@@ -108,24 +93,7 @@ const App = () => {
             backgroundPosition: 'center',
           }}
         >
-          {/* <Breadcrumb
-            style={{
-              margin: '16px 0',
-            }}
-          >
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb> */}
-          <div
-            // style={{
-            //   padding: 24,
-            //   minHeight: 360,
-            //   background: colorBgContainer,
-            //   borderRadius: borderRadiusLG,
-            // }}
-          >
-            {/* Bill is a cat. */}
-          </div>
+         
         </Content>
         <Footer
           style={{

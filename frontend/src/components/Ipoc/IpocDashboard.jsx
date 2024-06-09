@@ -11,7 +11,7 @@ import {
   UnorderedListOutlined
 } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import dashboardImage from './dashboardIP.jpg';
+import dashboardImage from '../../assets/dashboardIP.jpg';
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -47,8 +47,8 @@ const items = [
 {
   key: '1',
   icon: < UnorderedListOutlined />,
-  label: 'Add Company List',
-  linkTo: '/addcompanyList',
+  label: 'Add Company Manager',
+  linkTo: '/add-company-manager',
 },
 
 {
@@ -56,6 +56,12 @@ const items = [
   icon: < UnorderedListOutlined />,
   label: 'Add Company Detail',
   linkTo: '/addcompanyDetail',
+},
+{
+  key: '3',
+  icon: < UnorderedListOutlined />,
+  label: 'Student List',
+  linkTo: '/student-list',
 },
 ];
 const App = () => {

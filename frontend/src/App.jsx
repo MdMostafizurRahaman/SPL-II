@@ -1,26 +1,38 @@
-import { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Student_Signup from './Student_Signup'
-import Ipoc_Signup from './Ipoc_Signup'
-//import Company_Signup from './Company_Signup'
-import Company_Signup from './components/authentication/Company_Signup'
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
-import Login from './Login'
+
+import RegistrationTypeSelection from './components/authentication/RegistrationTypeSelection'
+import Login from './components/authentication/Login'
 import Home from './Home'
-import Upload from './Upload' 
-import ForgotPassword from './ForgotPassword'
-import StudentDashboard from './StudentDashboard'
-import IpocDashboard from './IpocDashboard'
-import CompanyDashboard from './CompanyDashboard'
-import Stu_dashboard from './Stu_dashboard'
-import RegistrationTypeSelection from './RegistrationTypeSelection'
-import UploadProfilePicture from './UploadProfilePicture'
-import UploadCGPAAndSkillset from './Upload_CGPA_&_Skills'
-import CompanyList from './CompanyList'
-import CompanyDetail from './CompanyDetails'
-import AddCompanyDetail from './components/company/AddCompanyDetail'
-import AddCompanyList from './components/company/AddCompanyList'
-import { CompanyProvider  } from './CompanyContext'
+import ForgotPassword from './components/authentication/ForgotPassword'
+import About from './About'
+
+
+import Student_Signup from './components/authentication/Student_Signup'
+import StudentDashboard from './components/students/Stu_dashboard'
+import Stu_dashboard from './components/students/Stu_dashboard'
+import UploadComponent from './components/students/Upload'
+import UploadProfilePicture from './components/students/UploadProfilePicture'
+import UploadCGPAAndSkillset from './components/students/Upload_CGPA_&_Skills'
+import CompanyList from './components/students/CompanyList'
+import CompanyDetail from './components/students/CompanyDetails'
+
+
+
+import Ipoc_Signup from './components/authentication/Ipoc_Signup'
+import IpocDashboard from './components/Ipoc/IpocDashboard'
+import AddCompanyDetail from './components/Ipoc/AddCompanyDetail'
+import AddCompanyManager from './components/Ipoc/AddCompanyManager'
+import { CompanyProvider  } from './components/Ipoc/CompanyContext'
+import StudentList from './components/Ipoc/StudentsList'
+
+
+
+import Company_Signup from './components/authentication/Company_Signup'
+import CompanyDashboard from './components/company/CompanyDashboard'
+import SuggestedInterns from './components/company/SuggestedInterns'
+import AddInterns from './components/company/AddInterns'
+
 
 function App() {
  
@@ -29,25 +41,37 @@ function App() {
     <CompanyProvider>
     <BrowserRouter>
       <Routes>
+    
+
                 <Route path="/student_register" element={<Student_Signup />} />
                 <Route path="/ipoc_register" element={<Ipoc_Signup />} />
                 <Route path="/company_register" element={<Company_Signup />} />
+
+
                 <Route path="/login" element={<Login />} />
                 <Route path="/" element={<Home />} />
-                {/* <Route path="/signup" element={<RegistrationTypeSelection />} /> */}
                 <Route path="/registration-type" element={<RegistrationTypeSelection />} />
+
         
-                <Route path="/upload" element={<Upload />} />
+                <Route path="/upload" element={<UploadComponent />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/studentdashboard" element={<StudentDashboard />} />
-                <Route path="/ipocdashboard" element={<IpocDashboard />} />
+                <Route path="/ipoc-dashboard" element={<IpocDashboard />} />
                 <Route path="/companydashboard" element={<CompanyDashboard />} />
                 <Route path="/stu_dashboard" element={<Stu_dashboard />} />
+                <Route path="/about" element={<About />}/>
+
+    
+                <Route path="/students-list" element={<StudentList />} />
+                
                 <Route path="/uploadCgpaAndSkills" element={<UploadCGPAAndSkillset />} />
                 <Route path="/companyList" element={<CompanyList />} />
                 <Route path="/company/:companyId" element={<CompanyDetail />} />
                 <Route path="/addcompanyDetail" element={<AddCompanyDetail />} />
-                <Route path="/addcompanyList" element={<AddCompanyList />} />
+                <Route path="/add-company-manager" element={<AddCompanyManager />} />
+                <Route path="/student-list" element={<StudentList />} />
+                <Route path="/suggested-interns" element={<SuggestedInterns />}/>
+                <Route path="/add-interns/:id" element={<AddInterns />} />
           
                 <Route path="/upload-profile-picture" element={<UploadProfilePicture />} />
             </Routes>

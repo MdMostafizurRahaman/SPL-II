@@ -1,26 +1,46 @@
-// RegistrationTypeSelection.jsx
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Select } from 'antd';
+import 'tailwindcss/tailwind.css';
+
+const { Option } = Select;
 
 function RegistrationTypeSelection() {
+    const [registrationType, setRegistrationType] = useState('');
+    const navigate = useNavigate();
+
+    const handleSelectChange = (value) => {
+        setRegistrationType(value);
+    };
+
+    const handleProceed = () => {
+        if (registrationType) {
+            navigate(`/${registrationType}_register`);
+        }
+    };
+
     return (
         <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
-            <div className="bg-white p-3 rounded w-25">
-                <h2>Choose Registration Type</h2>
-                <div className="mb-3">
-                    <Link to="/student_register" className="btn btn-primary w-100 rounded-0">
-                        Student
-                    </Link>
-                </div>
-                <div className="mb-3">
-                    <Link to="/ipoc_register" className="btn btn-primary w-100 rounded-0">
-                        IPOC
-                    </Link>
-                </div>
-                <div className="mb-3">
-                    <Link to="/company_register" className="btn btn-primary w-100 rounded-0">
-                        Company
-                    </Link>
+            <div className="bg-white p-3 rounded w-1/3">
+                <h2 className="text-center mb-4">Choose Registration Type</h2>
+                <Select
+                    className="w-full"
+                    placeholder="Select a registration type"
+                    onChange={handleSelectChange}
+                    size="large"
+                >
+                    <Option value="student">Student</Option>
+                    <Option value="ipoc">IPOC</Option>
+                    <Option value="company">Company</Option>
+                </Select>
+                <div className="mt-4">
+                    <button
+                        onClick={handleProceed}
+                        className="btn btn-primary w-full rounded-0"
+                        disabled={!registrationType}
+                    >
+                        Proceed
+                    </button>
                 </div>
             </div>
         </div>

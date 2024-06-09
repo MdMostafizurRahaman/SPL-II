@@ -1,27 +1,16 @@
-// import React from 'react'
-
-// function Home(){
-
-//     return(
-//         <h2>Home Component</h2>
-//     )
-// }
-// export default Home;
-
-
 import React, { useState } from 'react';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
   UserOutlined,
-  VideoCameraOutlined,
-  DashboardOutlined,
+  MenuOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Button, theme } from 'antd';
-import { Link } from 'react-router-dom'; // Import Link
-import internImage from './Home.png'; // Import the image
+import { Layout, Menu, Button, Typography } from 'antd';
+import { Link } from 'react-router-dom';
+import internImage from '../src/assets/home3.jpg';
+
 const { Header, Sider, Content } = Layout;
+const { Title } = Typography;
 
 function Home() {
   const [collapsed, setCollapsed] = useState(false);
@@ -30,32 +19,16 @@ function Home() {
     <Layout style={{ minHeight: '100vh' }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="demo-logo-vertical" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={['1']}
-        >
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
           <Menu.Item key="1" icon={<UserOutlined />}>
             <Link to="/registration-type" className="btn btn-primary">Signup</Link>
           </Menu.Item>
           <Menu.Item key="2" icon={<UserOutlined />}>
             <Link to="/login" className="btn btn-primary">Login</Link>
           </Menu.Item>
-          {/* <Menu.Item key="2" icon={<DashboardOutlined />}>
-            <Link to="/StudentDashboard">Student Dashboard</Link>
+          <Menu.Item key="3" icon={<MenuFoldOutlined />}>
+            <Link to="/about" className="btn btn-primary">About</Link>
           </Menu.Item>
-          <Menu.Item key="3" icon={<DashboardOutlined />}>
-            <Link to="/IpocDashboard">Ipoc Dashboard</Link>
-          </Menu.Item>
-          <Menu.Item key="4" icon={<DashboardOutlined />}>
-            <Link to="/CompanyDashboard">Company Dashboard</Link>
-          </Menu.Item>
-          <Menu.Item key="5" icon={<UploadOutlined />}>
-            <Link to="/Upload">Upload Resume</Link>
-          </Menu.Item>
-          <Menu.Item key="6" icon={<DashboardOutlined />}>
-            <Link to="/Stu_dashboard">StudentDashboard</Link>
-          </Menu.Item> */}
         </Menu>
       </Sider>
       <Layout>
@@ -71,18 +44,23 @@ function Home() {
             }}
           />
         </Header>
-        <Content 
-        style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              minHeight: 'calc(100vh - 64px)',
-              background: `url(${internImage})`, // Set the background image
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'center',
-        }} >
-          {/* Your content */}
+        <Content
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: 'calc(100vh - 64px)',
+            background: `url(${internImage})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+          }}
+        >
+          <div style={{ textAlign: 'center', color: 'black' }}>
+            <Title level={2}>Welcome to </Title>
+            <h1><b> Intern & Placement Office Management</b></h1>
+            
+          </div>
         </Content>
       </Layout>
     </Layout>
