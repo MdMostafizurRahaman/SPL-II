@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Select, Layout, Typography, Table } from 'antd';
 import { useCompanyContext } from './CompanyContext'; // Import the context
-import { useNavigate } from 'react-router-dom';
+
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -14,6 +15,15 @@ const AddCompanyDetail = () => {
   const handleBackToDashboard = () => {
     navigate('/ipocdashboard');
   };
+
+
+  useEffect(() => {
+
+    const user = localStorage.getItem('userType');
+    if (user == 'student' || user == 'company_manager') {
+      navigate('/login');
+    }
+  }, []);
 
   const onFinish = (values) => {
     const { companyName, technologies, functionalities } = values;

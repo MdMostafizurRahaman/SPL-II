@@ -25,12 +25,14 @@ import AddCompanyDetail from './components/Ipoc/AddCompanyDetail'
 import AddCompanyManager from './components/Ipoc/AddCompanyManager'
 import { CompanyProvider  } from './components/Ipoc/CompanyContext'
 import StudentList from './components/Ipoc/StudentsList'
+import CompanyModal from './components/Ipoc/SuggestStudent'
 
 
 
 import Company_Signup from './components/authentication/Company_Signup'
 import CompanyDashboard from './components/company/CompanyDashboard'
 import SuggestedInterns from './components/company/SuggestedInterns'
+import AddInterviews from './components/company/AddInterviews'
 import AddInterns from './components/company/AddInterns'
 
 
@@ -57,7 +59,7 @@ function App() {
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/studentdashboard" element={<StudentDashboard />} />
                 <Route path="/ipoc-dashboard" element={<IpocDashboard />} />
-                <Route path="/companydashboard" element={<CompanyDashboard />} />
+                <Route path="/company-dashboard" element={<CompanyDashboard />} />
                 <Route path="/stu_dashboard" element={<Stu_dashboard />} />
                 <Route path="/about" element={<About />}/>
 
@@ -71,7 +73,10 @@ function App() {
                 <Route path="/add-company-manager" element={<AddCompanyManager />} />
                 <Route path="/student-list" element={<StudentList />} />
                 <Route path="/suggested-interns" element={<SuggestedInterns />}/>
+                <Route path="/add-interviews/:id" element={<AddInterviews />} />
                 <Route path="/add-interns/:id" element={<AddInterns />} />
+                <Route path="/suggested-student" element={<CompanyModal />}/>
+
           
                 <Route path="/upload-profile-picture" element={<UploadProfilePicture />} />
             </Routes>

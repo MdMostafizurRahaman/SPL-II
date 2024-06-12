@@ -3,11 +3,9 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
-  MenuOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, Button, Typography } from 'antd';
 import { Link } from 'react-router-dom';
-import internImage from '../src/assets/home3.jpg';
 
 const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
@@ -15,11 +13,53 @@ const { Title } = Typography;
 function Home() {
   const [collapsed, setCollapsed] = useState(false);
 
+  const layoutStyle = {
+    minHeight: '100vh',
+    backgroundColor: '#2c3e50',
+  };
+
+  const headerStyle = {
+    padding: 0,
+    backgroundColor: '#1c2833',
+    display: 'flex',
+    alignItems: 'center',
+  };
+
+  const buttonStyle = {
+    fontSize: '16px',
+    width: 64,
+    height: 64,
+    color: '#ecf0f1',
+  };
+
+  const contentStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: 'calc(100vh - 64px)',
+    backgroundColor: '#2c3e50',
+  };
+
+  const boxStyle = {
+    padding: '20px',
+    backgroundColor: '#34495e',
+    borderRadius: '8px',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
+    textAlign: 'center',
+    color: '#ecf0f1',
+  };
+
+  const textStyle = {
+    fontSize: '36px',
+    fontFamily: 'Pacifico, cursive',
+    color: '#ecf0f1',
+  };
+
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+    <Layout style={layoutStyle}>
+      <Sider trigger={null} collapsible collapsed={collapsed} style={{ backgroundColor: '#1c2833' }}>
         <div className="demo-logo-vertical" />
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} style={{ backgroundColor: '#1c2833' }}>
           <Menu.Item key="1" icon={<UserOutlined />}>
             <Link to="/registration-type" className="btn btn-primary">Signup</Link>
           </Menu.Item>
@@ -32,34 +72,18 @@ function Home() {
         </Menu>
       </Sider>
       <Layout>
-        <Header style={{ padding: 0 }}>
+        <Header style={headerStyle}>
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: '16px',
-              width: 64,
-              height: 64,
-            }}
+            style={buttonStyle}
           />
         </Header>
-        <Content
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: 'calc(100vh - 64px)',
-            background: `url(${internImage})`,
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-          }}
-        >
-          <div style={{ textAlign: 'center', color: 'black' }}>
-            <Title level={2}>Welcome to </Title>
-            <h1><b> Intern & Placement Office Management</b></h1>
-            
+        <Content style={contentStyle}>
+          <div style={boxStyle}>
+          <Title level={2} style={textStyle}>Welcome to</Title>
+          <h1 style={textStyle}>Intern & Placement Office Management</h1>
           </div>
         </Content>
       </Layout>

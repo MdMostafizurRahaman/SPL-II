@@ -1,108 +1,97 @@
-// import React, { useState } from 'react';
-// import { InboxOutlined } from '@ant-design/icons';
-// import { message, Upload } from 'antd';
-// import { Link } from 'react-router-dom'; // Import Link from React Router
-// import uploadImage from './Upload_2.png'; // Importing the background image
-
-// const { Dragger } = Upload;
-
-// const uploadProps = {
-//   name: 'file',
-//   multiple: true,
-//   action: 'https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188',
-//   onChange(info) {
-//     const { status } = info.file;
-//     if (status !== 'uploading') {
-//       console.log(info.file, info.fileList);
-//     }
-//     if (status === 'done') {
-//       message.success(`${info.file.name} file uploaded successfully.`);
-//     } else if (status === 'error') {
-//       message.error(`${info.file.name} file upload failed.`);
-//     }
-//   },
-//   onDrop(e) {
-//     console.log('Dropped files', e.dataTransfer.files);
-//   },
-// };
-
-// const UploadComponent = () => (
-//   <div style={{ backgroundImage: `url(${uploadImage})`, backgroundSize: 'cover', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-//     <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '20px', borderRadius: '8px', maxWidth: '400px' }}>
-//       <Dragger {...uploadProps}>
-//         <p className="ant-upload-drag-icon">
-//           <InboxOutlined />
-//         </p>
-//         <p className="ant-upload-text" style={{ color: 'black' }}>Click or drag file to this area to upload</p>
-//         <p className="ant-upload-hint" style={{ color: 'black' }}>
-//           Support for a single or bulk upload. Strictly prohibited from uploading company data or other
-//           banned files.
-//         </p>
-//       </Dragger>
-//       {/* Navigation links */}
-//       <nav>
-//         <ul>
-//           <li><Link to="/">Home</Link></li>
-//           <li><Link to="/login">Login</Link></li>
-//         </ul>
-//       </nav>
-//     </div>
-//   </div>
-// );
-
-// export default UploadComponent;
-
-
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function UploadComponent() {
-  const [resume, setResume] = useState(null);
-  const [email, setEmail] = useState("");
-  const navigate = useNavigate(); // Initialize the navigate function
+  const [cv, setCV] = useState(null);
+  const navigate = useNavigate();
 
-  const submit = (e) => {
-    e.preventDefault(); // Prevent default form submission
+  useEffect(() => {
+    const user = localStorage.getItem('userType');
+    if (user === 'admin' || user === 'company_manager') {
+      navigate('/login');
+    }
+  }, []);
+
+  const submit = async (e) => {
+    e.preventDefault();
+    if (!cv) {
+      alert('Please select a file before submitting.');
+      return;
+    }
+
     const formData = new FormData();
-    formData.append('email', email);
-    formData.append('resume', resume);
+    formData.append('cv', cv);
+    const id = localStorage.getItem('userId');
+    // const id='6666d50ef0f23b83b9c735c4';
 
-    axios.post('http://localhost:3000/resume_upload', formData)
-      .then(result => {
-        console.log(result.data);
-        if (result.data) {
-          console.log("Success!!!!");
-          navigate('/Stu_dashboard'); // Navigate to the student dashboard after successful upload
-        }
-      })
-      .catch(err => console.log(err));
+    try {
+      const response = await fetch(`http://localhost:3000/students/${id}/cv`, {
+        method: 'POST',
+        body: formData,
+      });
+      console.log(response);
+      if (response.ok) {
+        console.log('Success!!!!');
+        navigate('/Stu_dashboard');
+      }
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      alert('Failed to upload the file. Please try again.');
+    }
+  };
+
+  const pageStyle = {
+    minHeight: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#2c3e50',
+  };
+
+  const formStyle = {
+    backgroundColor: '#34495e',
+    padding: '20px',
+    borderRadius: '8px',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
+    textAlign: 'center',
+    color: '#ecf0f1',
+  };
+
+  const inputStyle = {
+    width: '100%',
+    margin: '10px 0',
+    padding: '10px',
+    borderRadius: '5px',
+    border: 'none',
+    outline: 'none',
+  };
+
+  const buttonStyle = {
+    width: '100%',
+    padding: '15px',
+    backgroundColor: '#1abc9c',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '16px',
   };
 
   return (
-    <div>
-      <form id="regForm" className="row g-3 needs-validation" onSubmit={submit}>
+    <div style={pageStyle}>
+      <form id='regForm' className='row g-3 needs-validation' onSubmit={submit} style={formStyle}>
         <input
           required
-          type="file"
-          accept="application/pdf"
-          name="resume" // Ensure the name matches the expected field
-          className="form-control"
-          id="resume"
-          onChange={(e) => setResume(e.target.files[0])}
+          type='file'
+          accept='application/pdf'
+          name='cv'
+          className='form-control'
+          id='cv'
+          onChange={(e) => setCV(e.target.files[0])}
+          style={inputStyle}
         />
         <br />
-        <input
-          required
-          type="email"
-          name="email"
-          className="form-control"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <button
-          type="submit" // Set button type to "submit"
-          style={{ width: "400px", height: "100px" }}
-        >
+        <button type='submit' style={buttonStyle}>
           Submit
         </button>
       </form>

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Select, Layout } from 'antd';
-import { useNavigate } from 'react-router-dom';
+
 
 const { Content } = Layout;
 const { Option } = Select;
@@ -8,6 +9,14 @@ const { Option } = Select;
 const UploadCGPAAndSkillset = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate(); // Assign useNavigate to a variable
+
+  useEffect(() => {
+
+    const user = localStorage.getItem('userType');
+    if (user == 'admin' || user == 'company_manager') {
+      navigate('/login');
+    }
+  }, []);
 
   const onFinish = (values) => {
     console.log('Received values of form: ', values);

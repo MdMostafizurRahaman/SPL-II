@@ -50,7 +50,20 @@ companyRouter.get("/:id", async (req, res) => {
     res.json(company);
 });
 
-companyRouter.put("/:id", async (req, res) => {});
+companyRouter.put("/:id", async (req, res) => {
+    const { id } = req.params;
+    const body = req.body;
+
+    const company = await CompanyModel.findById(id);
+    if (!company) throw Error("Company not found");
+
+    const existedCompany = await CompanyModel.findOne({ name: body.name });
+    if (existedCompany && !existedCompany._id.equals(company._id)) throw Error("Company already exists already");
+
+    await CompanyModel.updateOne({ _id: id }, { $set: { ...body } });
+
+    res.json({ message: "updated successfully" });
+});
 
 companyRouter.delete("/:id", async (req, res) => {});
 

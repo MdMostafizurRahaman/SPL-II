@@ -4,6 +4,7 @@ const { UserModel } = require("../users/user.model");
 const { authValidator } = require("./auth.validator");
 const { verifyPassword, generateJwtToken } = require("../../utils/common.utils");
 const { formatError } = require("../../utils/format-error.utils");
+const { checkAuthentication } = require("../../middlewares/auth.middleware");
 
 authRouter.post("/login", async (req, res) => {
     const body = req.body;
@@ -25,7 +26,7 @@ authRouter.post("/login", async (req, res) => {
             userId: user._id,
             userType: user.userType,
         },
-        "6000000000"
+        "6000000000000"
     );
 
     res.cookie("access-token", accessToken, {
@@ -36,10 +37,20 @@ authRouter.post("/login", async (req, res) => {
     res.status(200).json({ message: "successfully logged in", accessToken });
 });
 
-authRouter.delete("/logout", function(req, res) {
+authRouter.get("/profile", checkAuthentication, async function (req, res) {
+    const user = req.user;
+    let userData = await UserModel.findById(user?.userId);
+
+    userData = userData.toJSON();
+
+    const { password, ...response } = userData;
+
+    res.json(response);
+});
+
+authRouter.delete("/logout", function (req, res) {
     res.clearCookie("access-token");
     res.status(200).json({ message: "successfully logged out" });
-
-})
+});
 
 module.exports = { authRouter };

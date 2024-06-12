@@ -24,4 +24,14 @@ const getStudentBYID=async (id)=>{
   }
 }
 
-export {showCompany,getStudentBYID} ;
+const cvUpload = async (data,id)=>{
+  try{
+    const res = await axios.post(`students/${id}/cv`,data,{withCredentials:true});
+    console.log(res,"cv upload api");
+
+  }catch(err){
+    console.error(err);
+  }
+}
+
+export {showCompany,getStudentBYID,cvUpload} ;

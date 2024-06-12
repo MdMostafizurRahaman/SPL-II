@@ -1,88 +1,104 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
-  UserOutlined,
-  DashboardOutlined,
-  UploadOutlined,
-  UnorderedListOutlined
+  UnorderedListOutlined,
+  LogoutOutlined
 } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Layout, Menu, Typography } from 'antd';
 import dashboardImage from '../../assets/dashboardIP.jpg';
+
 const { Header, Content, Footer, Sider } = Layout;
-function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
-}
+const { Title } = Typography;
+
 const items = [
-//   getItem('Option 1', '1', <PieChartOutlined />),
-//   getItem('Option 2', '2', <DesktopOutlined />),
-//   getItem('User', 'sub1', <UserOutlined />, [
-//     getItem('Tom', '3'),
-//     getItem('Bill', '4'),
-//     getItem('Alex', '5'),
-//   ]),
-//   getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-//   {
-//     key: '9',
-//     icon: <FileOutlined />,
-//     label: 'Upload CV', // Change the label to 'Upload'
-//     linkTo: '/upload', 
-//   },
-//   // Inside the items array
-// {
-//   key: '10',
-//   icon: <UploadOutlined />,
-//   label: 'Upload Profile Picture',
-//   linkTo: '/upload-profile-picture',
-// },
-
-{
-  key: '1',
-  icon: < UnorderedListOutlined />,
-  label: 'Add Company Manager',
-  linkTo: '/add-company-manager',
-},
-
-{
-  key: '2',
-  icon: < UnorderedListOutlined />,
-  label: 'Add Company Detail',
-  linkTo: '/addcompanyDetail',
-},
-{
-  key: '3',
-  icon: < UnorderedListOutlined />,
-  label: 'Student List',
-  linkTo: '/student-list',
-},
+  {
+    key: '1',
+    icon: <UnorderedListOutlined />,
+    label: 'Add Company Manager',
+    linkTo: '/add-company-manager',
+  },
+  // {
+  //   key: '2',
+  //   icon: <UnorderedListOutlined />,
+  //   label: 'Add Company Detail',
+  //   linkTo: '/addcompanyDetail',
+  // },
+  {
+    key: '3',
+    icon: <UnorderedListOutlined />,
+    label: 'Student List',
+    linkTo: '/student-list',
+  },
+  
+  {
+    key: '4',
+    icon: <LogoutOutlined />,
+    label: 'Logout',
+    linkTo: '/logout',
+  },
 ];
-const App = () => {
+
+const IpocDashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = localStorage.getItem('userType');
+    if (user === 'student' || user === 'company_manager') {
+      navigate('/login');
+    }
+  }, [navigate]);
+
+  const handleLogout = () => {
+    // Clear localStorage
+    localStorage.clear();
+
+    // Clear cookies
+    document.cookie.split(";").forEach((c) => {
+      document.cookie = c
+        .replace(/^ +/, "")
+        .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
+
+    // Redirect to login page
+    navigate('/login');
+  };
+
+  const boxStyle = {
+    padding: '40px',
+    backgroundColor: '#34495e',
+    borderRadius: '8px',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
+    textAlign: 'center',
+    color: '#ecf0f1',
+    maxWidth: '600px', // Limiting box width for a smaller size
+    margin: 'auto', // Center align the box horizontally
+    marginTop: '250px', // Provide some top margin for better spacing
+    maxHeight: '300px', // Limiting box height to prevent it from being too tall
+    overflow: 'auto', // Adding scroll bar if content exceeds height
+  };
+
+  const textStyle = {
+    fontSize: '36px',
+    fontFamily: 'Pacifico, cursive',
+    color: '#ecf0f1',
+  };
+
   return (
-    <Layout
-      style={{
-        minHeight: '100vh',
-      }}
-    >
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+    <Layout style={{ minHeight: '100vh', backgroundColor: '#2c3e50' }}>
+      <Sider
+        collapsible
+        collapsed={collapsed}
+        onCollapse={(value) => setCollapsed(value)}
+      >
         <div className="demo-logo-vertical" />
-        {/* <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} /> */}
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-          {/* Map through items array */}
           {items.map((item) => (
-            <Menu.Item key={item.key} icon={item.icon}>
-              {/* Render either a Link or a span based on the presence of linkTo */}
+            <Menu.Item
+              key={item.key}
+              icon={item.icon}
+              onClick={item.key === '4' ? handleLogout : null}
+            >
               {item.linkTo ? (
                 <Link to={item.linkTo}>{item.label}</Link>
               ) : (
@@ -93,53 +109,25 @@ const App = () => {
         </Menu>
       </Sider>
       <Layout>
-        <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-          }}
-        />
+        <Header style={{ padding: 0 }} />
         <Content
-        style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: 'calc(100vh - 64px)', // Subtract header height
+          style={{
+            ...boxStyle,
             background: `url(${dashboardImage})`,
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
           }}
         >
-          {/* <Breadcrumb
-            style={{
-              margin: '16px 0',
-            }}
-          >
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb> */}
-          <div
-            // style={{
-            //   padding: 24,
-            //   minHeight: 360,
-            //   background: colorBgContainer,
-            //   borderRadius: borderRadiusLG,
-            // }}
-          >
-            {/* Bill is a cat. */}
-          </div>
+          <Title level={3} style={textStyle}>Dear admin panel,</Title>
+          <p style={{ fontSize: '16px', color: '#ecf0f1' }}>
+            Welcome to your dashboard. Here you can view the student list & their CV. You can suggest students to the respective company & you can also add company managers.
+          </p>
         </Content>
-        <Footer
-          style={{
-            textAlign: 'center',
-          }}
-        >
-          {/* Ant Design ©{new Date().getFullYear()} Created by Ant UED */}
-        </Footer>
+        <Footer style={{ textAlign: 'center', backgroundColor: '#1c2833', color: '#ecf0f1' }}>IPOM</Footer>
       </Layout>
     </Layout>
   );
 };
-export default App;
 
+export default IpocDashboard;

@@ -22,6 +22,18 @@ const studentSignUp = async (data) => {
   }
 };
 
+const companySignUp = async (data) => {
+  try {
+    const res = await axios.post("/company-managers", data, { withCredentials: true });
+    console.log("created company signup ", res);
+    return res.data;
+  } catch (error) {
+    console.error("error in company signup", error);
+    throw error;
+  }
+};
+
+
 const login=async(data)=>{
   try{
     const res = await axios.post("/auth/login", data, { withCredentials: true });
@@ -31,7 +43,18 @@ const login=async(data)=>{
   }
 }
 
+const getUser = async ()=>{
+  try{
+    const res = await axios.get('/auth/profile',{withCredentials:true});
+    return res;
+
+  }catch(err){
+    console.error(err);
+  }
+
+}
 
 
 
-export { ipocSignUp,studentSignUp,login };
+
+export { ipocSignUp,studentSignUp,companySignUp,login,getUser };

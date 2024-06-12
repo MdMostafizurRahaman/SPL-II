@@ -3,6 +3,8 @@ require("express-async-errors");
 
 const mongoose = require("mongoose");
 const cors = require("cors");
+var cookieParser = require('cookie-parser')
+
 
 const { authRouter } = require("./src/modules/auth/auth.controller");
 const { userRouter } = require("./src/modules/users/user.controller");
@@ -12,6 +14,7 @@ const { companyManager } = require("./src/modules/company-managers/company-manag
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser())
 
 const allowedOrigins = ['http://localhost:5173'];
 
@@ -23,6 +26,9 @@ app.use(
       credentials: true,
     })
   );
+
+app.use(express.static('./public'));
+
 
 mongoose
     .connect("mongodb://127.0.0.1:27017/ipoc")

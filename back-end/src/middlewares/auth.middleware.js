@@ -4,7 +4,7 @@ function checkAuthentication(req, res, next) {
     try {
         const bearerToken = req.headers.authorization;
         const authToken = bearerToken ? bearerToken.split(" ")[1] : null;
-        const cookie = req.cookie["access-token"];
+        const cookie = req.cookies["access-token"];
 
         const token = cookie || authToken;
 
@@ -13,8 +13,10 @@ function checkAuthentication(req, res, next) {
         const decoded = verifyJwtToken(token);
 
         if (!decoded) {
-            if (!token) return res.status(401).json({ message: "Authentication failed" });
+            return res.status(401).json({ message: "Authentication failed" });
         }
+
+        console.log(decoded);
 
         req.user = decoded;
 
@@ -61,7 +63,7 @@ async function isCompanyManager(req, res, next) {
     }
 }
 
-export default {
+module.exports = {
     checkAuthentication,
     isAdmin,
     isTeacher,

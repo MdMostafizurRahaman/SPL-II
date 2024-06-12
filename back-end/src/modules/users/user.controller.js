@@ -45,7 +45,18 @@ userRouter.get("/:id", async (req, res) => {
 });
 
 userRouter.put("/:id", async (req, res) => {
-    
+    const { id } = req.params;
+    const body = req.body;
+
+    const user = await UserModel.findById(id);
+    if (!user) throw Error("User not found");
+
+    const existedUser = await UserModel.findOne({ email: body.email });
+    if (existedUser && !existedUser._id.equals(user._id)) throw Error("User already exists already");
+
+    await UserModel.updateOne({ _id: id }, { $set: { ...body } });
+
+    res.json({ message: "updated successfully" });
 });
 
 userRouter.delete("/:id", async (req, res) => {

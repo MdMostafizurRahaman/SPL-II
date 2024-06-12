@@ -19,15 +19,40 @@ function RegistrationTypeSelection() {
         }
     };
 
+    const containerStyle = {
+        fontFamily: 'Arial, sans-serif',
+        color: '#f0f0f0',
+        lineHeight: '1.6',
+        padding: '20px',
+        maxWidth: '400px',
+        margin: '0 auto',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        borderRadius: '8px',
+        boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
+    };
+
+    const headerStyle = {
+        textAlign: 'center',
+        color: '#66fcf1',
+        marginBottom: '20px',
+    };
+
+    const buttonStyle = {
+        backgroundColor: '#007bff',
+        borderColor: '#007bff',
+        color: '#fff',
+    };
+
     return (
-        <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
-            <div className="bg-white p-3 rounded w-1/3">
-                <h2 className="text-center mb-4">Choose Registration Type</h2>
+        <div className="d-flex justify-content-center align-items-center" style={{ backgroundColor: '#1f2833', minHeight: '100vh' }}>
+            <div style={containerStyle}>
+                <h2 style={headerStyle}>Choose Registration Type</h2>
                 <Select
                     className="w-full"
                     placeholder="Select a registration type"
                     onChange={handleSelectChange}
                     size="large"
+                    style={{ marginBottom: '1rem' }}
                 >
                     <Option value="student">Student</Option>
                     <Option value="ipoc">IPOC</Option>
@@ -36,7 +61,8 @@ function RegistrationTypeSelection() {
                 <div className="mt-4">
                     <button
                         onClick={handleProceed}
-                        className="btn btn-primary w-full rounded-0"
+                        className="btn btn-primary w-full"
+                        style={buttonStyle}
                         disabled={!registrationType}
                     >
                         Proceed

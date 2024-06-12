@@ -5,6 +5,7 @@ const { CompanyModel } = require("../companies/company.model");
 const { studentValidator } = require("./student.validator");
 const { formatError } = require("../../utils/format-error.utils");
 const { hashPassword } = require("../../utils/common.utils");
+const { cvUploader } = require("./student.uploader");
 
 const company_attributes = "name details location";
 
@@ -23,6 +24,17 @@ studentRouter.post("/", async (req, res) => {
     const { password, ...response } = student.toJSON();
 
     res.status(201).json(response);
+});
+
+studentRouter.post("/:id/cv", cvUploader.single("cv"), async (req, res) => {
+    const { id } = req.params;
+    const filename = req.file?.filename;
+
+    if (!filename) throw new Error("File must be provided");
+
+    await StudentModel.updateOne({ _id: id }, { $set: { cvUrl: filename } });
+
+    res.json({ message: "uploaded successfully" });
 });
 
 studentRouter.get("/", async (req, res) => {
@@ -83,7 +95,20 @@ studentRouter.get("/:id", async (req, res) => {
     res.json(response);
 });
 
-studentRouter.put("/:id", async (req, res) => {});
+studentRouter.put("/:id", async (req, res) => {
+    const { id } = req.params;
+    const body = req.body;
+
+    const student = await StudentModel.findById(id);
+    if (!student) throw Error("Student not found");
+
+    const existedStudent = await StudentModel.findOne({ email: body.email });
+    if (existedStudent && !existedStudent._id.equals(student._id)) throw Error("Student already exists already");
+
+    await StudentModel.updateOne({ _id: id }, { $set: { ...body } });
+
+    res.json({ message: "updated successfully" });
+});
 
 studentRouter.delete("/:id", async (req, res) => {
     const { id } = req.params;

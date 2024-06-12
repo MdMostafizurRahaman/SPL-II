@@ -1,70 +1,97 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
-  UserOutlined,
-  DashboardOutlined,
   UploadOutlined,
-  UnorderedListOutlined
+  UnorderedListOutlined,
+  LogoutOutlined,
 } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import dashboardImage from '../../assets/dashboardSt2.png';
+import { Layout, Menu, Typography } from 'antd';
+import dashboardImage from '../../assets/dashboardIP.jpg';
+
 const { Header, Content, Footer, Sider } = Layout;
-function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
-}
+const { Title } = Typography;
+
 const items = [
- 
   {
     key: '1',
     icon: <FileOutlined />,
-    label: 'Upload CV', // Change the label to 'Upload'
-    linkTo: '/upload', 
+    label: 'Upload CV',
+    linkTo: '/upload',
   },
-
-{
-  key: '2',
-  icon: <UploadOutlined />,
-  label: 'Upload CGPA & Skills',
-  linkTo: '/uploadCgpaAndSkills',
-},
-
-{
-  key: '3',
-  icon: < UnorderedListOutlined />,
-  label: 'Company List',
-  linkTo: '/companyList',
-},
-
-
-
+  // {
+  //   key: '2',
+  //   icon: <UploadOutlined />,
+  //   label: 'Upload CGPA & Skills',
+  //   linkTo: '/uploadCgpaAndSkills',
+  // },
+  {
+    key: '3',
+    icon: <UnorderedListOutlined />,
+    label: 'Company List',
+    linkTo: '/companyList',
+  },
+  {
+    key: '4',
+    icon: <LogoutOutlined />,
+    label: 'Logout',
+    linkTo: '/logout',
+  },
 ];
-const App = () => {
+
+const StudentDashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = localStorage.getItem('userType');
+    if (user === 'admin' || user === 'company_manager') {
+      navigate('/login');
+    }
+  }, [navigate]);
+
+  const handleLogout = () => {
+    // Clear localStorage
+    localStorage.clear();
+
+    // Clear cookies
+    document.cookie.split(";").forEach((c) => {
+      document.cookie = c
+        .replace(/^ +/, "")
+        .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
+
+    // Redirect to login page
+    navigate('/login');
+  };
+
+  const boxStyle = {
+    padding: '40px',
+    backgroundColor: '#34495e',
+    borderRadius: '8px',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
+    textAlign: 'center',
+    color: '#ecf0f1',
+    maxWidth: '600px', // Limiting box width for a smaller size
+    margin: 'auto', // Center align the box horizontally
+    marginTop: '250px', // Provide some top margin for better spacing
+    maxHeight: '300px', // Limiting box height to prevent it from being too tall
+    overflow: 'auto', // Adding scroll bar if content exceeds height
+  };
+
+  const textStyle = {
+    fontSize: '36px',
+    fontFamily: 'Pacifico, cursive',
+    color: '#ecf0f1',
+  };
+
   return (
-    <Layout
-      style={{
-        minHeight: '100vh',
-      }}
-    >
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+    <Layout style={{ minHeight: '100vh', backgroundColor: '#2c3e50' }}>
+      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} style={{ backgroundColor: '#1c2833' }}>
         <div className="demo-logo-vertical" />
-        {/* <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} /> */}
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-          {/* Map through items array */}
           {items.map((item) => (
-            <Menu.Item key={item.key} icon={item.icon}>
-              {/* Render either a Link or a span based on the presence of linkTo */}
+            <Menu.Item key={item.key} icon={item.icon} onClick={item.key === '4' ? handleLogout : null}>
               {item.linkTo ? (
                 <Link to={item.linkTo}>{item.label}</Link>
               ) : (
@@ -75,36 +102,21 @@ const App = () => {
         </Menu>
       </Sider>
       <Layout>
-        <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-          }}
-        />
-        <Content
-        style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: 'calc(100vh - 64px)', // Subtract header height
+        <Header style={{ padding: 0 }} />
+        <Content  style={{
+            ...boxStyle,
             background: `url(${dashboardImage})`,
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
-          }}
-        >
-         
+          }}>
+          <Title level={3} style={textStyle}>Dear student, </Title>
+          <p style={{ fontSize: '16px', color: '#ecf0f1' }}>Welcome to your dashboard. Here you can upload your CV and see the company list.</p>
         </Content>
-        <Footer
-          style={{
-            textAlign: 'center',
-          }}
-        >
-          {/* Ant Design ©{new Date().getFullYear()} Created by Ant UED */}
-        </Footer>
+        <Footer style={{ textAlign: 'center', backgroundColor: '#1c2833', color: '#ecf0f1' }}>IPOM</Footer>
       </Layout>
     </Layout>
   );
 };
-export default App;
 
+export default StudentDashboard;

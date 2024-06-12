@@ -1,8 +1,8 @@
 import { axios } from "../utils/axios";
 
-const addInterviewees = async (id) => {
+const addSuggestedStudent = async (id) => {
   try {
-    const res = await axios.post(`/${id}/interviewees`, {id}, {
+    const res = await axios.post(`/${id}/interviewees`, { id }, {
       withCredentials: true,
     });
     console.log(`Addd students {id} for interview`, res);
@@ -13,29 +13,39 @@ const addInterviewees = async (id) => {
   }
 };
 
+const addForInterview = async (body,companyID) => {
+  try {
+    console.log(companyID,"iofffffffffffffffff");
+    const res = await axios.post(`/companies/${companyID}/interviewees`, body, { withCredentials: true });
+    return res.data;
 
-const addInterns = async (data) => {
-    try {
-      const res = await axios.post('/interns', data, {
-        withCredentials: true,
-      });
-      console.log('Create Interns', res);
-      return res.data;
-    } catch (error) {
-      console.error('error in creating Interns', error);
-      throw error;
-    }
-  };
+  } catch (err) {
+    console.error(err);
 
-
-  const findCompanyManagerById=async (id) =>{
-    try{
-      const res = await axios.get(`/company-managers/${id}`,{withCredentials:true,});
-      return res.data;
-
-    }catch(err){
-      console.error('error in finding manager',err);
-    }
   }
+}
 
-export {addInterviewees, addInterns,findCompanyManagerById};
+
+const addInterns = async (body,companyID) => {
+  try {
+    const res = await axios.post(`/companies/${companyID}/interns`, body, { withCredentials: true });
+    console.log('Create Interns', res);
+    return res.data;
+  } catch (error) {
+    console.error('error in creating Interns', error);
+    throw error;
+  }
+};
+
+
+const findCompanyManagerById = async (id) => {
+  try {
+    const res = await axios.get(`/company-managers/${id}`, { withCredentials: true, });
+    return res.data;
+
+  } catch (err) {
+    console.error('error in finding manager', err);
+  }
+}
+
+export { addSuggestedStudent, addInterns, findCompanyManagerById, addForInterview };
