@@ -1,26 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { Form, Input, Button, Select, Layout } from 'antd';
-
+import { useNavigate } from 'react-router-dom';
+import { Form, Input, Button, Select, Layout, Typography } from 'antd';
+import { getAllCompany } from '../../api/ipoc.api';
+import { skillSetUpload } from '../../api/student.api';
 
 const { Content } = Layout;
 const { Option } = Select;
+const { Title } = Typography;
 
 const UploadCGPAAndSkillset = () => {
   const [form] = Form.useForm();
-  const navigate = useNavigate(); // Assign useNavigate to a variable
+  const navigate = useNavigate(); 
+  const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
-
     const user = localStorage.getItem('userType');
-    if (user == 'admin' || user == 'company_manager') {
+    if (user === 'admin' || user === 'company_manager') {
       navigate('/login');
     }
-  }, []);
 
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values);
-    navigate('/Stu_dashboard'); // Use navigate function here
+    const fetchCompanies = async () => {
+      try {
+        const response = await getAllCompany();
+        setCompanies(response.data);
+      } catch (error) {
+        console.error('Failed to fetch companies:', error);
+      }
+    };
+
+    fetchCompanies();
+  }, [navigate]);
+
+  const onFinish = async (values) => {
+    const stuId = localStorage.getItem('userId');
+    try {
+      const res = await skillSetUpload(values, stuId);
+      console.log(res, "jasssenda");
+      navigate('/Stu_dashboard'); 
+      form.resetFields();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const validateCGPA = (_, value) => {
@@ -31,8 +51,9 @@ const UploadCGPAAndSkillset = () => {
   };
 
   return (
-    <Layout style={{ minHeight: '100vh', justifyContent: 'center', alignItems: 'center' }}>
-      <Content style={{ width: '50%', padding: '24px', background: '#fff', borderRadius: '8px' }}>
+    <Layout style={{ minHeight: '100vh', backgroundColor: '#2c3e50', justifyContent: 'center', alignItems: 'center' }}>
+      <Content style={{ width: '50%', padding: '24px', background: '#34495e', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)' }}>
+        <Title level={2} style={{ textAlign: 'center', color: '#ecf0f1' }}>Upload CGPA, Skillset, & Prefered Company</Title>
         <Form
           form={form}
           name="upload_cgpa_and_skillset"
@@ -48,7 +69,7 @@ const UploadCGPAAndSkillset = () => {
               { validator: validateCGPA },
             ]}
           >
-            <Input placeholder="Enter your CGPA" type="number" step="0.01" />
+            <Input placeholder="Enter your CGPA" type="number" step="0.01" style={{ borderRadius: '4px' }} />
           </Form.Item>
           <Form.Item
             name="skills"
@@ -58,7 +79,7 @@ const UploadCGPAAndSkillset = () => {
             <Select
               mode="multiple"
               placeholder="Select your skills"
-              style={{ width: '100%' }}
+              style={{ width: '100%', borderRadius: '4px' }}
             >
               <Option value="React">React</Option>
               <Option value="JavaScript">JavaScript</Option>
@@ -79,30 +100,26 @@ const UploadCGPAAndSkillset = () => {
               <Option value="Vue.js">Vue.js</Option>
               <Option value="Kotlin">Kotlin</Option>
               <Option value="Laravel">Laravel</Option>
-              
-              {/* Add more skills as needed */}
             </Select>
           </Form.Item>
-
           <Form.Item
-            name="preferredCompanies"
+            name="preferred_companies"
             label="Preferred Company"
             rules={[{ required: true, message: 'Please select your preferred companies!' }]}
           >
             <Select
-              mode="multiple"
-              placeholder="Select your preferred companies"
-              style={{ width: '100%' }}
+              placeholder="Select your preferred only companies not multiple"
+              style={{ width: '100%', borderRadius: '4px' }}
             >
-              <Option value="Cefalo">Cefalo</Option>
-              <Option value="Brain Station 23">Brain Station 23</Option>
-              <Option value="Samsung">Samsung</Option>
-              <Option value="a2i">a2i</Option>
-              {/* Add more companies as needed */}
+              {companies.map((company) => (
+                <Option key={company._id} value={company._id}>
+                  {company.name}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
+            <Button type="primary" htmlType="submit" style={{ width: '100%', borderRadius: '4px', backgroundColor: '#1abc9c', borderColor: '#1abc9c' }}>
               Submit
             </Button>
           </Form.Item>

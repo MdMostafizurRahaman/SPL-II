@@ -34,4 +34,14 @@ const cvUpload = async (data,id)=>{
   }
 }
 
-export {showCompany,getStudentBYID,cvUpload} ;
+const skillSetUpload = async (data,id)=>{
+  try{
+    const res = await axios.put(`students/${id}`,data,{withCredentials:true});
+
+  }catch(err){
+
+
+  }
+}
+
+export {showCompany,getStudentBYID,cvUpload,skillSetUpload} ;

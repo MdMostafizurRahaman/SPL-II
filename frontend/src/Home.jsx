@@ -6,6 +6,7 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu, Button, Typography } from 'antd';
 import { Link } from 'react-router-dom';
+import backgroundImage from './assets/iit.jpg';  // Corrected path
 
 const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
@@ -20,7 +21,7 @@ function Home() {
 
   const headerStyle = {
     padding: 0,
-    backgroundColor: '#1c2833',
+    backgroundColor: 'rgba(28, 40, 51, 0.8)',
     display: 'flex',
     alignItems: 'center',
   };
@@ -37,29 +38,32 @@ function Home() {
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: 'calc(100vh - 64px)',
-    backgroundColor: '#2c3e50',
+    backgroundImage: `url(${backgroundImage})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
   };
 
   const boxStyle = {
     padding: '20px',
-    backgroundColor: '#34495e',
-    borderRadius: '8px',
+    backgroundColor: 'rgba(52, 73, 94, 0.8)', // semi-transparent background
+    borderRadius: '35px',
     boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
     textAlign: 'center',
     color: '#ecf0f1',
   };
 
   const textStyle = {
-    fontSize: '36px',
+    fontSize: '45px',
     fontFamily: 'Pacifico, cursive',
     color: '#ecf0f1',
   };
 
   return (
     <Layout style={layoutStyle}>
-      <Sider trigger={null} collapsible collapsed={collapsed} style={{ backgroundColor: '#1c2833' }}>
+      <Sider trigger={null} collapsible collapsed={collapsed} style={{ backgroundColor: 'rgba(28, 40, 51, 0.8)' }}>
         <div className="demo-logo-vertical" />
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} style={{ backgroundColor: '#1c2833' }}>
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} style={{ backgroundColor: 'rgba(28, 40, 51, 0.8)' }}>
           <Menu.Item key="1" icon={<UserOutlined />}>
             <Link to="/registration-type" className="btn btn-primary">Signup</Link>
           </Menu.Item>
@@ -82,8 +86,8 @@ function Home() {
         </Header>
         <Content style={contentStyle}>
           <div style={boxStyle}>
-          <Title level={2} style={textStyle}>Welcome to</Title>
-          <h1 style={textStyle}>Intern & Placement Office Management</h1>
+            <Title level={2} style={textStyle}>Welcome to</Title>
+            <h1 style={textStyle}>Intern & Placement Office Management</h1>
           </div>
         </Content>
       </Layout>

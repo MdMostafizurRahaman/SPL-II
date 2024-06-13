@@ -8,7 +8,6 @@ const AddInterviews = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
-  const [companyId, setCompanyId] = useState();
 
   //force pushh
   const handleSubmit = async (values) => {
@@ -16,9 +15,9 @@ const AddInterviews = () => {
     try {
       const managerId = localStorage.getItem('userId');
       const res = await findCompanyManagerById(managerId); //this is hardcoded company manager id, need to get this when doing authentication
-      setCompanyId(res.company._id);
+      const comId=res.company._id;
 
-      const response = await addForInterview(values, companyId);
+      const response = await addForInterview(values, comId);
       console.log('Response:', response);
       navigate('/company-dashboard');
     } catch (error) {

@@ -7,16 +7,15 @@ const AddInterns = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
-  const [companyId, setCompanyId] = useState();
 
   const handleSubmit = async (values) => {
     setIsSubmitting(true);
     const managerId = localStorage.getItem('userId');
     try {
       const res = await findCompanyManagerById(managerId); //this is hardcoded company manager id, need to get this when doing authentication
-      setCompanyId(res.company._id);
+      const comId=res.company._id;
 
-      const response = await addInterns(values, companyId);
+      const response = await addInterns(values, comId);
       console.log('Response:', response);
       navigate('/company-dashboard');
     } catch (error) {

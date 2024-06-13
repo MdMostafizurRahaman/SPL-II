@@ -13,7 +13,7 @@ import StudentDashboard from './components/students/Stu_dashboard'
 import Stu_dashboard from './components/students/Stu_dashboard'
 import UploadComponent from './components/students/Upload'
 import UploadProfilePicture from './components/students/UploadProfilePicture'
-import UploadCGPAAndSkillset from './components/students/Upload_CGPA_&_Skills'
+import UploadSkillset from './components/students/Upload_CGPA_&_Skills'
 import CompanyList from './components/students/CompanyList'
 import CompanyDetail from './components/students/CompanyDetails'
 
@@ -66,7 +66,7 @@ function App() {
     
                 <Route path="/students-list" element={<StudentList />} />
                 
-                <Route path="/uploadCgpaAndSkills" element={<UploadCGPAAndSkillset />} />
+                <Route path="/UploadSkillset" element={<UploadSkillset />} />
                 <Route path="/companyList" element={<CompanyList />} />
                 <Route path="/company/:companyId" element={<CompanyDetail />} />
                 <Route path="/addcompanyDetail" element={<AddCompanyDetail />} />

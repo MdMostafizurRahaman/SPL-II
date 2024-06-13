@@ -5,9 +5,13 @@ import {
   UploadOutlined,
   UnorderedListOutlined,
   LogoutOutlined,
+  InfoCircleOutlined, // Import the new icon
 } from '@ant-design/icons';
-import { Layout, Menu, Typography } from 'antd';
+import { Layout, Menu, Typography, Modal, Button } from 'antd';
 import dashboardImage from '../../assets/dashboardIP.jpg';
+import InternStatus from './internStatus';
+import { getStudentBYID } from '../../api/student.api';
+import backgroundImage from '../../assets/iit.jpg'; // Import your background image here
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Title } = Typography;
@@ -19,17 +23,22 @@ const items = [
     label: 'Upload CV',
     linkTo: '/upload',
   },
-  // {
-  //   key: '2',
-  //   icon: <UploadOutlined />,
-  //   label: 'Upload CGPA & Skills',
-  //   linkTo: '/uploadCgpaAndSkills',
-  // },
+  {
+    key: '2',
+    icon: <UploadOutlined />,
+    label: 'Upload Skills & Preferred Company',
+    linkTo: '/UploadSkillset',
+  },
   {
     key: '3',
     icon: <UnorderedListOutlined />,
     label: 'Company List',
     linkTo: '/companyList',
+  },
+  {
+    key: '5',
+    icon: <InfoCircleOutlined />,
+    label: 'My Status',
   },
   {
     key: '4',
@@ -41,13 +50,26 @@ const items = [
 
 const StudentDashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false); // State for modal visibility
   const navigate = useNavigate();
+  const [allocatedCompany, setAllocatedCompany] = useState();
 
   useEffect(() => {
     const user = localStorage.getItem('userType');
     if (user === 'admin' || user === 'company_manager') {
       navigate('/login');
     }
+    const fetchStudent = async () => {
+      try {
+        const studentId = localStorage.getItem('userId');
+        const res = await getStudentBYID(studentId);
+        setAllocatedCompany(res.data.selected_company[0].company.name);
+      } catch (error) {
+        console.log('Error fetching students:', error);
+      }
+    };
+
+    fetchStudent();
   }, [navigate]);
 
   const handleLogout = () => {
@@ -65,22 +87,41 @@ const StudentDashboard = () => {
     navigate('/login');
   };
 
+  const handleMenuClick = (key) => {
+    if (key === '4') {
+      handleLogout();
+    } else if (key === '5') {
+      setIsModalVisible(true); // Show the modal
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false); // Hide the modal
+  };
+
+  const contentStyle = {
+    backgroundImage: `url(${backgroundImage})`, // Set the background image for Content
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    minHeight: 'calc(100vh - 64px)', // Adjusting height for the Content
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '40px', // Padding inside the Content
+  };
+
   const boxStyle = {
-    padding: '40px',
-    backgroundColor: '#34495e',
-    borderRadius: '8px',
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
+    maxWidth: '600px', // Limiting box width for a smaller size
+    padding: '40px', // Padding inside the box
+    backgroundColor: '#34495e', // Box background color
+    borderRadius: '35px',
     textAlign: 'center',
     color: '#ecf0f1',
-    maxWidth: '600px', // Limiting box width for a smaller size
-    margin: 'auto', // Center align the box horizontally
-    marginTop: '250px', // Provide some top margin for better spacing
-    maxHeight: '300px', // Limiting box height to prevent it from being too tall
-    overflow: 'auto', // Adding scroll bar if content exceeds height
   };
 
   const textStyle = {
-    fontSize: '36px',
+    fontSize: '65px',
     fontFamily: 'Pacifico, cursive',
     color: '#ecf0f1',
   };
@@ -91,7 +132,7 @@ const StudentDashboard = () => {
         <div className="demo-logo-vertical" />
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
           {items.map((item) => (
-            <Menu.Item key={item.key} icon={item.icon} onClick={item.key === '4' ? handleLogout : null}>
+            <Menu.Item key={item.key} icon={item.icon} onClick={() => handleMenuClick(item.key)}>
               {item.linkTo ? (
                 <Link to={item.linkTo}>{item.label}</Link>
               ) : (
@@ -103,17 +144,24 @@ const StudentDashboard = () => {
       </Sider>
       <Layout>
         <Header style={{ padding: 0 }} />
-        <Content  style={{
+        <Content style={contentStyle}>
+          <div style={{
             ...boxStyle,
-            background: `url(${dashboardImage})`,
+            backgroundImage: `url(${dashboardImage})`, // Set background image for the box
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
           }}>
-          <Title level={3} style={textStyle}>Dear student, </Title>
-          <p style={{ fontSize: '16px', color: '#ecf0f1' }}>Welcome to your dashboard. Here you can upload your CV and see the company list.</p>
+            <Title level={3} style={textStyle}>Dear student, </Title>
+            <p style={{ fontSize: '16px', color: '#ecf0f1' }}>Welcome to your dashboard. Here you can upload your CV and see the company list.</p>
+          </div>
         </Content>
         <Footer style={{ textAlign: 'center', backgroundColor: '#1c2833', color: '#ecf0f1' }}>IPOM</Footer>
+        <InternStatus
+          visible={isModalVisible}
+          onClose={handleCloseModal}
+          modalText={allocatedCompany}
+        />
       </Layout>
     </Layout>
   );

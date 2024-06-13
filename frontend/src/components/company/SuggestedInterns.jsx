@@ -23,7 +23,8 @@ const SuggestedStudentsTable = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const res = await findCompanyManagerById('666319381bd1d2ed39c36e69');
+        const managerId = localStorage.getItem('userId');
+        const res = await findCompanyManagerById(managerId);
         const studentIds = res.company.suggested_students;
 
         const studentsData = await Promise.all(

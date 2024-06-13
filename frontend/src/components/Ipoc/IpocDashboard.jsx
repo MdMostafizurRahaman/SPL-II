@@ -6,6 +6,7 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu, Typography } from 'antd';
 import dashboardImage from '../../assets/dashboardIP.jpg';
+import backgroundImage from '../../assets/iit.jpg'; // Import your background image here
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Title } = Typography;
@@ -17,19 +18,12 @@ const items = [
     label: 'Add Company Manager',
     linkTo: '/add-company-manager',
   },
-  // {
-  //   key: '2',
-  //   icon: <UnorderedListOutlined />,
-  //   label: 'Add Company Detail',
-  //   linkTo: '/addcompanyDetail',
-  // },
   {
     key: '3',
     icon: <UnorderedListOutlined />,
     label: 'Student List',
     linkTo: '/student-list',
   },
-  
   {
     key: '4',
     icon: <LogoutOutlined />,
@@ -64,22 +58,34 @@ const IpocDashboard = () => {
     navigate('/login');
   };
 
+  const contentStyle = {
+    backgroundImage: `url(${backgroundImage})`, // Set the background image for Content
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    minHeight: 'calc(100vh - 64px)', // Adjusting height for the Content
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '40px', // Padding inside the Content
+  };
+
   const boxStyle = {
-    padding: '40px',
-    backgroundColor: '#34495e',
-    borderRadius: '8px',
+    maxWidth: '600px', // Limiting box width for a smaller size
+    padding: '40px', // Padding inside the box
+    backgroundColor: '#34495e', // Box background color
+    borderRadius: '35px',
     boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
     textAlign: 'center',
     color: '#ecf0f1',
-    maxWidth: '600px', // Limiting box width for a smaller size
-    margin: 'auto', // Center align the box horizontally
-    marginTop: '250px', // Provide some top margin for better spacing
-    maxHeight: '300px', // Limiting box height to prevent it from being too tall
-    overflow: 'auto', // Adding scroll bar if content exceeds height
+    backgroundImage: `url(${dashboardImage})`, // Set background image for the box
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
   };
 
   const textStyle = {
-    fontSize: '36px',
+    fontSize: '65px',
     fontFamily: 'Pacifico, cursive',
     color: '#ecf0f1',
   };
@@ -90,6 +96,7 @@ const IpocDashboard = () => {
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
+        style={{ backgroundColor: '#1c2833' }}
       >
         <div className="demo-logo-vertical" />
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
@@ -110,19 +117,13 @@ const IpocDashboard = () => {
       </Sider>
       <Layout>
         <Header style={{ padding: 0 }} />
-        <Content
-          style={{
-            ...boxStyle,
-            background: `url(${dashboardImage})`,
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-          }}
-        >
-          <Title level={3} style={textStyle}>Dear admin panel,</Title>
-          <p style={{ fontSize: '16px', color: '#ecf0f1' }}>
-            Welcome to your dashboard. Here you can view the student list & their CV. You can suggest students to the respective company & you can also add company managers.
-          </p>
+        <Content style={contentStyle}>
+          <div style={boxStyle}>
+            <Title level={3} style={textStyle}>Dear admin panel,</Title>
+            <p style={{ fontSize: '16px', color: '#ecf0f1' }}>
+              Welcome to your dashboard. Here you can view the student list & their CV. You can suggest students to the respective company & you can also add company managers.
+            </p>
+          </div>
         </Content>
         <Footer style={{ textAlign: 'center', backgroundColor: '#1c2833', color: '#ecf0f1' }}>IPOM</Footer>
       </Layout>

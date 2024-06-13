@@ -3,7 +3,7 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
-  VideoCameraOutlined,
+  HomeOutlined,
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
 import { Link } from 'react-router-dom';
@@ -60,10 +60,10 @@ const About = () => {
           mode="inline"
           defaultSelectedKeys={['1']}
         >
-          <Menu.Item key="1" icon={<UserOutlined />}>
+          <Menu.Item key="1" icon={<HomeOutlined />}>
             <Link to="/">Home</Link>
           </Menu.Item>
-          <Menu.Item key="2" icon={<VideoCameraOutlined />}>
+          <Menu.Item key="2" icon={<UserOutlined />}>
             <Link to="/login">Login</Link>
           </Menu.Item>
         </Menu>

@@ -7,7 +7,6 @@ import axios from 'axios';
 import SuggestStudent from './SuggestStudent';
 
 const { Header, Sider, Content } = Layout;
-const { Title } = Typography;
 
 
 const StudentList = () => {
@@ -119,9 +118,13 @@ const StudentList = () => {
       dataIndex: 'preferred_companies',
       key: 'preferred_companies',
       render: (preferredCompanies) => (
-        <span style={{ color: '#000000' }}>
-          {preferredCompanies.join(', ')}
-        </span>
+        <ul style={{ listStyleType: 'none', padding: 0 }}>
+          {preferredCompanies?.map((company) => (
+            <li key={company._id}>
+              <span style={{ color: '#000000' }}>{company.name}</span>
+            </li>
+          ))}
+        </ul>
       ),
     },
     {
@@ -143,7 +146,27 @@ const StudentList = () => {
       dataIndex: 'call_for_interview',
       key: 'call_for_interview',
       render: (callForInterview) => (
-        <span style={{ color: '#000000' }}>{callForInterview.join(', ')}</span>
+        <ul style={{ listStyleType: 'none', padding: 0 }}>
+          {callForInterview.map((company) => (
+            <li key={company._id}>
+              <span style={{ color: '#000000' }}>{company.company.name}</span>
+            </li>
+          ))}
+        </ul>
+      ),
+    },
+    {
+      title: 'Selected Company',
+      dataIndex: 'selected_company',
+      key:'selected_company',
+      render: (selectedCompany) => (
+        <ul style={{ listStyleType: 'none', padding: 0 }}>
+          {selectedCompany.map((selectedCompany) => (
+            <li key={selectedCompany._id}>
+              <span style={{ color: '#000000' }}>{selectedCompany.company.name}</span>
+            </li>
+          ))}
+        </ul>
       ),
     },
     {

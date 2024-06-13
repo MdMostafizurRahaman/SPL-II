@@ -16,11 +16,12 @@ const StudentSchema = new mongoose.Schema({
             company: { type: mongoose.Schema.ObjectId, ref: "companies", required: true },
         },
     ],
-    selected_company: {
-        startDate: { type: Date },
-        endDate: { type: Date },
-        company: { type: mongoose.Schema.ObjectId, ref: "companies" },
-    },
+    selected_company: [
+        {
+            company: { type: mongoose.Schema.ObjectId, ref: "companies" },
+
+        }
+    ],
 });
 
 const StudentModel = UserModel.discriminator("students", StudentSchema);
